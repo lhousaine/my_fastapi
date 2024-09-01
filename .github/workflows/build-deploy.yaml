@@ -1,15 +1,16 @@
 name: Build and Deploy Code
 
 on: [push, pull_request]
+
 jobs:
-  job1:
+  build:
     environment:
       name: testing
     env:
       DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
       DATABASE_PORT: ${{secrets.DATABASE_PORT}}
       DATABASE_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
-      DATABASE_NAME: my_fast${{secrets.DATABASE_NAME}}
+      DATABASE_NAME: ${{secrets.DATABASE_NAME}}
       DATABASE_USERNAME: ${{secrets.DATABASE_USERNAME}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
@@ -39,7 +40,7 @@ jobs:
           python-version: '3.9'
       - name: update pip
         run: python -m pip install --upgrade pip
-      - name: Install all dependencies
+      - name: install all dependencies
         run: pip install -r requirements.txt
       - name: test with pytest
         run: |
